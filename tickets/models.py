@@ -47,7 +47,6 @@ class Ticket(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # optional: soft delete / closed_by etc.
 
     def __str__(self):
         return f"[{self.priority.upper()}] {self.title} - {self.status}"
@@ -60,10 +59,11 @@ class TicketUpdate(models.Model):
     )
     note = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    is_internal = models.BooleanField(default=False)  # internal note vs user-visible
+    is_internal = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["created_at"]
 
     def __str__(self):
         return f"Update {self.pk} by {self.created_by}"
+
