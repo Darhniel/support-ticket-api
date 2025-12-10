@@ -54,11 +54,9 @@ class TicketSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-        # basic conflict example: can't set status to resolved without updates
+        
         if data.get("status") == Ticket.STATUS_RESOLVED:
-            # If trying to resolve, require that there is at least one update provided in context
-            # (This is an example; in most real apps you'd model state changes differently.)
-            # We'll allow resolve but log a warning — here we simply allow it.
+            
             pass
         return data
 
@@ -68,6 +66,6 @@ class TicketSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
-        # simple example: capture who changed assignee/status in TicketUpdate automatically?
-        # We'll just update the ticket. If you want, you can create an automatic TicketUpdate here.
+        
         return super().update(instance, validated_data)
+
