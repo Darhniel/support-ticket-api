@@ -10,12 +10,9 @@ from .filters import TicketFilter
 
 
 class IsSupportOrOwner(permissions.BasePermission):
-    """
-    Example permission: allow owners and staff to update; everyone authenticated can create.
-    """
-
+    
     def has_object_permission(self, request, view, obj):
-        # allow read for owner and staff
+        
         if request.user.is_staff:
             return True
         return obj.created_by == request.user
@@ -34,7 +31,7 @@ class TicketViewSet(viewsets.ModelViewSet):
     search_fields = ["title", "description"]
 
     def get_permissions(self):
-        # for delete forbid non-staff
+        
         if self.action in ("destroy",):
             return [permissions.IsAdminUser()]
         return super().get_permissions()
@@ -62,3 +59,4 @@ class TicketUpdateViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
